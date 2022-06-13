@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Fredoka+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+}
+ui{
+    position: fixed;
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0);
+
+    left: 0;
+    top: 0;
+}
+bar{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+points{
+    font-family: 'Roboto';
+    font-size: 20px;
+    color: white;
+    font-weight: 800;
+}
+board{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 10px;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: brown;
+
+    justify-content: space-evenly;
+    align-items: center;
+}
+card{
+    display: block;
+    position: relative;
+    width: 80px;
+    height: 110px;
+
+    border: 2px solid rgb(0, 27, 66);
+    border-radius: 2px;
+
+    transform-style: preserve-3d;
+    transition: all 1s ease;
+    perspective: 1000px;
+    cursor: pointer;
+}
+card-inner{
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+.show {
+    pointer-events: none;
+    transform: rotateY(180deg) scale(1.2);
+}
+card-front, card-back {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+
+    top: 0;
+    left: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    transition: all .5s ease;
+}
+
+card-front {
+    overflow: hidden;
+    background-color: rgb(0, 136, 170);
+    color: white;
+}
+card-back {
+    background-color: rgb(0, 136, 170);
+    color: white;
+    transform: rotateY(180deg);
+}
+card-front::after{
+    opacity: 0;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 200%;
+    height: 20%;
+    overflow: hidden;
+    transition: all 0.8s ease-out;
+
+    background-color: rgb(98, 224, 255);
+    transform: translate(20%, -100%) rotateZ(45deg);
+}
+card:hover card-front{
+    animation-name: hovering;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+card:hover card-front::after{
+    opacity: 1;
+    transform: translate(-100%, 550%) rotateZ(45deg);
+}
+
+@keyframes hovering{
+    0%{
+        background-color: rgb(0, 136, 170);
+    }
+    50%{
+        background-color: rgb(98, 224, 255);
+    }
+    100%{
+        background-color: rgb(0, 136, 170);
+    }
+}
+.empty{
+    pointer-events: none; 
+
+    display: block;
+    width: 80px;
+    height: 110px;
+    background-color: rgba(77, 77, 77, 0.493);
+}
+
+.empty card-inner{
+    display: none;
+    background: gray;
+}
+
+end-game{
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+
+    transition: all .5s ease;
+}
+end-game div{
+    text-align: center;
+
+    padding: 20px;
+    border-radius: 3px;
+    background-color: white;
+
+    transform: scale(1);
+}
+end-game div h1{
+    font-size: 30px;
+    font-family: 'Roboto';
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+end-game div button{
+    background-color: orange;
+    border: none;
+    border-radius: 2px;
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Roboto';
+    padding: 10px;
+
+    cursor: pointer;
+    transition: all .5s ease;
+}
+end-game div button:hover{
+    filter: brightness(0.8);
+}
+
+.hidden{
+    opacity: 0;
+    visibility: hidden;
+}
+.hidden div{
+    transform: scale(0);
+}
+
+@media screen and (max-width: 800px){
+    board{
+        padding-top: 50px;
+        grid-template-columns: auto auto auto auto !important;
+        overflow-y: auto;
+    }
+
+    card{
+        width: 60px;
+        height: 90px;
+    }
+
+    .empty{
+        display: block;
+        width: 60px;
+        height: 90px;
+        background-color: rgba(77, 77, 77, 0.493);
+    }
+}
